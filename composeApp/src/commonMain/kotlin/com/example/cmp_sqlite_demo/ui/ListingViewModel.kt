@@ -1,16 +1,22 @@
 package com.example.cmp_sqlite_demo.ui
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.cmp_sqlite_demo.data.AppDatabase
 import com.example.cmp_sqlite_demo.data.LogEntry
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 class ListingViewModel(val database: AppDatabase) : ViewModel() {
 
-    private val _items = MutableStateFlow<List<LogEntry>>(emptyList())
-    val items: StateFlow<List<LogEntry>> = _items.asStateFlow()
+    val dbItems = database.logEntryDao().getAll()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
+
 
     fun addItem(text: String) {
         if (text.isBlank()) return
@@ -18,8 +24,10 @@ class ListingViewModel(val database: AppDatabase) : ViewModel() {
             id = kotlin.time.Clock.System.now().toEpochMilliseconds(),
             text = text
         )
-        val currentList = _items.value.toMutableList()
-        currentList.add(newItem)
-        _items.value = currentList
+
+        viewModelScope.launch {
+            database.logEntryDao().insert(newItem)
+        }
+
     }
 }

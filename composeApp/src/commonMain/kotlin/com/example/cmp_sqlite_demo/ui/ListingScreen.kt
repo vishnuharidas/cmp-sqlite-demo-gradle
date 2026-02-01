@@ -33,7 +33,7 @@ import kotlinx.datetime.toLocalDateTime
 @Composable
 fun ListingScreen(database: AppDatabase) {
     val viewModel = viewModel { ListingViewModel(database) }
-    val items by viewModel.items.collectAsState()
+    val items by viewModel.dbItems.collectAsState()
     var text by remember { mutableStateOf("") }
 
     Scaffold(
