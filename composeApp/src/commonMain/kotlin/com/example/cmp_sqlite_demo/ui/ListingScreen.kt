@@ -24,6 +24,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,12 +53,21 @@ fun ListingScreen() {
                     .fillMaxWidth()
             ) {
                 items(items) { item ->
-                    Text(
-                        text = item,
+                    val time = Instant.fromEpochMilliseconds(item.id).toLocalDateTime(TimeZone.currentSystemDefault())
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(16.dp)
-                    )
+                    ) {
+                        Text(
+                            text = "Time: ${time.date} ${time.time}",
+                            style = androidx.compose.material3.MaterialTheme.typography.labelSmall
+                        )
+                        Text(
+                            text = item.text,
+                            style = androidx.compose.material3.MaterialTheme.typography.bodyLarge
+                        )
+                    }
                     HorizontalDivider()
                 }
             }
