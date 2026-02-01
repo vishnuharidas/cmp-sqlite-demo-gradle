@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=cmp_sqlite_demo
+PRODUCT_BUNDLE_IDENTIFIER=com.example.cmp_sqlite_demo.cmp_sqlite_demo$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
