@@ -2,13 +2,12 @@ package com.example.cmp_sqlite_demo
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.cmp_sqlite_demo.data.AppDatabase
 import com.example.cmp_sqlite_demo.ui.ListingScreen
 
 @Composable
-@Preview
-fun App() {
+fun App(database: AppDatabase) {
     MaterialTheme {
-        ListingScreen()
+        ListingScreen(database)
     }
 }

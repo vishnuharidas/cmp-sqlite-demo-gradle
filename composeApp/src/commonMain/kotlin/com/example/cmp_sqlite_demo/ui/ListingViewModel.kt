@@ -1,12 +1,14 @@
 package com.example.cmp_sqlite_demo.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.cmp_sqlite_demo.data.AppDatabase
 import com.example.cmp_sqlite_demo.data.LogEntry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class ListingViewModel : ViewModel() {
+class ListingViewModel(val database: AppDatabase) : ViewModel() {
+
     private val _items = MutableStateFlow<List<LogEntry>>(emptyList())
     val items: StateFlow<List<LogEntry>> = _items.asStateFlow()
 
