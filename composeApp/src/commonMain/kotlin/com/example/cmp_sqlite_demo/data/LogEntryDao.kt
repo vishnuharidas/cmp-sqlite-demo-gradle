@@ -12,4 +12,7 @@ interface LogEntryDao {
 
     @Query("SELECT * FROM LogEntry ORDER BY id DESC")
     fun getAll(): Flow<List<LogEntry>>
+
+    @Query("DELETE FROM LogEntry WHERE id = :id")
+    suspend fun deleteItem(id: Long)
 }
