@@ -30,4 +30,10 @@ class ListingViewModel(val database: AppDatabase) : ViewModel() {
         }
 
     }
+
+    fun deleteItem(id: Long) {
+        viewModelScope.launch {
+            database.logEntryDao().deleteItem(id)
+        }
+    }
 }

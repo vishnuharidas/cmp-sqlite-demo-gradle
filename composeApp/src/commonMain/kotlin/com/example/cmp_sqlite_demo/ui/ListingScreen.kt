@@ -1,25 +1,12 @@
 package com.example.cmp_sqlite_demo.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -55,20 +42,15 @@ fun ListingScreen(database: AppDatabase) {
             ) {
                 items(items) { item ->
                     val time = Instant.fromEpochMilliseconds(item.id).toLocalDateTime(TimeZone.currentSystemDefault())
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Text(
-                            text = "Time: ${time.date} ${time.time}",
-                            style = androidx.compose.material3.MaterialTheme.typography.labelSmall
-                        )
-                        Text(
-                            text = item.text,
-                            style = androidx.compose.material3.MaterialTheme.typography.bodyLarge
-                        )
-                    }
+                    ListItem(
+                        headlineContent = { Text(item.text) },
+                        overlineContent = { Text("Time: ${time.date} ${time.time}") },
+                        trailingContent = {
+                            IconButton(onClick = { viewModel.deleteItem(item.id) }) {
+                                Icon(Icons.Outlined.Delete, "Delete Item")
+                            }
+                        }
+                    )
                     HorizontalDivider()
                 }
             }

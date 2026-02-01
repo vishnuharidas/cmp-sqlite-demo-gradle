@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -48,6 +47,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
